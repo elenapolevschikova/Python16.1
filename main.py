@@ -1,0 +1,69 @@
+# -*- coding: utf-8 -*-
+# № 16/4. Построение базового проекта. Часть 1. # Запуск в main
+
+from fastapi import FastAPI, Path  # фреймворк
+from typing import Annotated
+
+app = FastAPI()  # апп равен названию нашему фреймворку
+
+users = {'1': 'Имя: Example, возраст: 18'}
+
+
+@app.get("/")  # если мы получили .get("/")-гет запрос
+async def Welcome() -> dict:  # то отработай эту функцию
+    return {"message": "Hello world!"}
+
+
+@app.get("/users")  # если мы получили .get("/")-гет запрос
+async def Get_Users() -> dict:  # то отработай эту функцию
+    return {"message": users}
+
+
+# @app.get("/massage/{message_id}")  # если мы получили .get("/")-гет запрос
+# async def get_message(message_id: str) -> dict:  # то отработай эту функцию
+#     return users[message_id]
+
+
+@app.post("/user/{username}/{age}")  # если мы получили .get("/")-гет запрос
+async def Post_User(username: str, age: int) -> str:  # то отработай эту функцию
+    current_index = str(int(max(users, key=int)) + 1)
+    users[current_index] = username, age
+    return "User <user_id> is registered"
+
+
+@app.put("/user/{user_id}/{username}/{age}")  # если мы получили .get("/")-гет запрос
+async def Update_User(user_id: str, username: str, age: int) -> str:  # то отработай эту функцию
+    users[user_id] = username, age
+    return "The user <user_id> is registered"
+
+
+@app.delete("/user/{user_id}")  # если мы получили .get("/")-гет запрос
+async def Delete_User(user_id: str) -> str:  # то отработай эту функцию
+    users.pop(user_id)
+    return f"Message with {user_id} was deleted"
+
+
+# @app.delete("/")  # если мы получили .get("/")-гет запрос
+# async def delete_all_messages() -> str:  # то отработай эту функцию
+#     users.clear()
+#     return "All messages deleted"
+
+########################
+
+# 1. GET '/users'
+# {
+# "1": "Имя: Example, возраст: 18"
+# }
+# 2. POST '/user/{username}/{age}' # username - UrbanUser, age - 24
+# "User 2 is registered"
+# 3. POST '/user/{username}/{age}' # username - NewUser, age - 22
+# "User 3 is registered"
+# 4. PUT '/user/{user_id}/{username}/{age}' # user_id - 1, username - UrbanProfi, age - 28
+# "User 1 has been updated"
+# 5. DELETE '/user/{user_id}' # user_id - 2
+# "User 2 has been deleted"
+# 6. GET '/users'
+# {
+# "1": "Имя: UrbanProfi, возраст: 28",
+# "3": "Имя: NewUser, возраст: 22"
+# }
