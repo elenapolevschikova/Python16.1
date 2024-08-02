@@ -10,12 +10,12 @@ users = {'1': 'Имя: Example, возраст: 18'}
 
 
 @app.get("/")  # если мы получили .get("/")-гет запрос
-async def Welcome() -> dict:  # то отработай эту функцию
+async def welcome() -> dict:  # то отработай эту функцию
     return {"message": "Hello world!"}
 
 
 @app.get("/users")  # если мы получили .get("/")-гет запрос
-async def Get_Users() -> dict:  # то отработай эту функцию
+async def get_users() -> dict:  # то отработай эту функцию
     return {"message": users}
 
 
@@ -25,23 +25,22 @@ async def Get_Users() -> dict:  # то отработай эту функцию
 
 
 @app.post("/user/{username}/{age}")  # если мы получили .get("/")-гет запрос
-async def Post_User(username: str, age: int) -> str:  # то отработай эту функцию
+async def post_user(username: str, age: int) -> str:  # то отработай эту функцию
     current_index = str(int(max(users, key=int)) + 1)
     users[current_index] = username, age
     return "User <user_id> is registered"
 
 
 @app.put("/user/{user_id}/{username}/{age}")  # если мы получили .get("/")-гет запрос
-async def Update_User(user_id: str, username: str, age: int) -> str:  # то отработай эту функцию
+async def update_user(user_id: str, username: str, age: int) -> str:  # то отработай эту функцию
     users[user_id] = username, age
     return "The user <user_id> is registered"
 
 
 @app.delete("/user/{user_id}")  # если мы получили .get("/")-гет запрос
-async def Delete_User(user_id: str) -> str:  # то отработай эту функцию
+async def delete_user(user_id: str) -> str:  # то отработай эту функцию
     users.pop(user_id)
     return f"Message with {user_id} was deleted"
-
 
 # @app.delete("/")  # если мы получили .get("/")-гет запрос
 # async def delete_all_messages() -> str:  # то отработай эту функцию
@@ -67,3 +66,5 @@ async def Delete_User(user_id: str) -> str:  # то отработай эту ф
 # "1": "Имя: UrbanProfi, возраст: 28",
 # "3": "Имя: NewUser, возраст: 22"
 # }
+
+############################
